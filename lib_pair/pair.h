@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <type_traits>
+#include <utility>
 
 template <typename T1, typename T2>
 class TPair {
@@ -53,16 +54,20 @@ template <typename T1, typename T2>
 TPair<T1, T2>::TPair() : _first(T1()), _second(T2()) { }
 
 template <typename T1, typename T2>
-TPair<T1, T2>::TPair(const T1& first, const T2& second) : _first(first), _second(second) { }
+TPair<T1, T2>::TPair(const T1& first, const T2& second)
+    : _first(first), _second(second) { }
 
 template <typename T1, typename T2>
-TPair<T1, T2>::TPair(T1&& first, T2&& second) noexcept : _first(std::move(first)), _second(std::move(second)) { }
+TPair<T1, T2>::TPair(T1&& first, T2&& second) noexcept
+    : _first(std::move(first)), _second(std::move(second)) { }
 
 template <typename T1, typename T2>
-TPair<T1, T2>::TPair(const TPair& other) : _first(other._first), _second(other._second) { }
+TPair<T1, T2>::TPair(const TPair& other) : _first(other._first),
+    _second(other._second) { }
 
 template <typename T1, typename T2>
-TPair<T1, T2>::TPair(TPair&& other) noexcept : _first(std::move(other._first)), _second(std::move(other._second)) { }
+TPair<T1, T2>::TPair(TPair&& other) noexcept
+    : _first(std::move(other._first)), _second(std::move(other._second)) { }
 
 // геттеры и сеттеры
 template <typename T1, typename T2>
@@ -108,7 +113,8 @@ bool TPair<T1, T2>::operator!=(const TPair& other) const noexcept {
 
 template <typename T1, typename T2>
 bool TPair<T1, T2>::operator<(const TPair& other) const noexcept {
-    return (_first < other._first) || (_first == other._first && _second < other._second);
+    return (_first < other._first) ||
+        (_first == other._first && _second < other._second);
 }
 
 template <typename T1, typename T2>
@@ -118,7 +124,7 @@ bool TPair<T1, T2>::operator>(const TPair& other) const noexcept {
 
 template <typename T1, typename T2>
 bool TPair<T1, T2>::operator<=(const TPair& other) const noexcept {
-    return !(other < *this);
+    return !(*this > other);
 }
 
 template <typename T1, typename T2>
@@ -129,14 +135,16 @@ bool TPair<T1, T2>::operator>=(const TPair& other) const noexcept {
 // арифметические операции
 template <typename T1, typename T2>
 TPair<T1, T2> TPair<T1, T2>::operator+(const TPair& other) const noexcept {
-    static_assert(std::is_arithmetic<T1>::value && std::is_arithmetic<T2>::value,
+    static_assert(std::is_arithmetic<T1>::value &&
+                  std::is_arithmetic<T2>::value,
                   "Both T1 and T2 must be arithmetic types for addition.");
     return TPair(_first + other._first, _second + other._second);
 }
 
 template <typename T1, typename T2>
 TPair<T1, T2> TPair<T1, T2>::operator-(const TPair& other) const noexcept {
-    static_assert(std::is_arithmetic<T1>::value && std::is_arithmetic<T2>::value,
+    static_assert(std::is_arithmetic<T1>::value &&
+                  std::is_arithmetic<T2>::value,
                   "Both T1 and T2 must be arithmetic types for subtraction.");
     return TPair(_first - other._first, _second - other._second);
 }
