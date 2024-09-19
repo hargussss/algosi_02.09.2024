@@ -46,7 +46,11 @@ class TPair {
     std::string to_string() const noexcept;
 
     // вывод в поток
-    friend std::ostream& operator<<(std::ostream& os, const TPair<T1, T2>& pair);
+    template <typename U1, typename U2>
+    friend std::ostream& operator<<(
+        std::ostream& os,
+        const TPair<U1, U2>& pair
+    );
 };
 
 // конструкторы и деструкторы
@@ -158,7 +162,10 @@ std::string TPair<T1, T2>::to_string() const noexcept {
 }
 
 template <typename T1, typename T2>
-std::ostream& operator<<(std::ostream& os, const TPair<T1, T2>& pair) {
+std::ostream& operator<<(
+    std::ostream& os,
+    const TPair<T1, T2>& pair
+) {
     os << pair.to_string();
     return os;
 }
