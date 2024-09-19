@@ -1,7 +1,7 @@
 // Copyright 2024 Marina Usova
 
 #define EASY_EXAMPLE
-//#define TPAIR_EXAMPLE
+// #define TPAIR_EXAMPLE
 
 #ifdef EASY_EXAMPLE
 
