@@ -49,8 +49,7 @@ class TPair {
     template <typename U1, typename U2>
     friend std::ostream& operator<<(
         std::ostream& os,
-        const TPair<U1, U2>& pair
-    );
+        const TPair<U1, U2>& pair);
 };
 
 // конструкторы и деструкторы
